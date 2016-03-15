@@ -1,0 +1,104 @@
+# Copyright (C) 2009 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+LOCAL_PATH:= $(call my-dir)
+include $(CLEAR_VARS)
+
+MY_CORE_PATH := source/core
+MY_CORE_UTILTIY_PATH := $(MY_CORE_PATH)/utility
+MY_CORE_STD_LIB_PATH := $(MY_CORE_PATH)/standardLibrary
+MY_CORE_SOUND_PATH :=  $(MY_CORE_PATH)/sound
+MY_CORE_GRAPHICS_PATH :=  $(MY_CORE_PATH)/graphic
+MY_CORE_BACKEND_PATH :=  $(MY_CORE_PATH)/backend
+MY_CORE_BACKEND_COMMON_PATH :=  $(MY_CORE_BACKEND_PATH)/common
+
+
+MY_NATIVE_PATH := source/native
+MY_NATIVE_UTILITY_PATH := $(MY_NATIVE_PATH)/utility
+MY_NATIVE_SOUND_PATH := $(MY_NATIVE_PATH)/sound
+
+#-------------------------------- NATIVE ------------------------------- #
+
+#Add Native classes here:
+LOCAL_SRC_FILES += $(MY_NATIVE_PATH)/CAndroidFighterPilotThePacificWar.cpp
+
+#Utility classes
+LOCAL_SRC_FILES += $(MY_NATIVE_UTILITY_PATH)/CAndroidFileStream.cpp
+LOCAL_SRC_FILES += $(MY_NATIVE_UTILITY_PATH)/NativeIPC.cpp
+LOCAL_SRC_FILES += $(MY_NATIVE_UTILITY_PATH)/CAndroidImageStore.cpp
+
+#Add sound files here
+LOCAL_SRC_FILES += $(MY_NATIVE_SOUND_PATH)/CAndroidWavLoader.cpp
+
+#Add graphic files here
+LOCAL_SRC_FILES += $(MY_NATIVE_PATH)/graphic/AndroidGraphicsEngine.cpp
+
+#-------------------------------- CORE ------------------------------- #
+
+#Add Core classes here:
+LOCAL_SRC_FILES +=  $(MY_CORE_PATH)/CFighterPilotThePacificWar.cpp
+LOCAL_SRC_FILES +=  $(MY_CORE_PATH)/CGame.cpp
+
+#Add sound files here
+LOCAL_SRC_FILES += $(MY_CORE_SOUND_PATH)/CGameAudioEngine.cpp
+LOCAL_SRC_FILES += $(MY_CORE_SOUND_PATH)/COpenSLEngine.cpp
+LOCAL_SRC_FILES += $(MY_CORE_SOUND_PATH)/CMusicPlayer.cpp
+LOCAL_SRC_FILES += $(MY_CORE_SOUND_PATH)/CSoundPlayer.cpp
+LOCAL_SRC_FILES += $(MY_CORE_SOUND_PATH)/CSoundMixer.cpp
+LOCAL_SRC_FILES += $(MY_CORE_SOUND_PATH)/CWavLoader.cpp
+LOCAL_SRC_FILES += $(MY_CORE_SOUND_PATH)/CSoundObject.cpp
+LOCAL_SRC_FILES += $(MY_CORE_SOUND_PATH)/CSoundEngine.cpp
+LOCAL_SRC_FILES += $(MY_CORE_SOUND_PATH)/CSoundFileNameMapping.cpp
+LOCAL_SRC_FILES += $(MY_CORE_SOUND_PATH)/CSoundFilePreferredVolume.cpp
+
+#Add graphic classes here
+LOCAL_SRC_FILES += $(MY_CORE_GRAPHICS_PATH)/CGraphicsEngine.cpp
+LOCAL_SRC_FILES += $(MY_CORE_GRAPHICS_PATH)/CTextureObject.cpp
+LOCAL_SRC_FILES += $(MY_CORE_GRAPHICS_PATH)/CAnimationPlayer.cpp
+
+#Add utility cpp files here
+LOCAL_SRC_FILES += $(MY_CORE_UTILTIY_PATH)/CFileStream.cpp
+LOCAL_SRC_FILES += $(MY_CORE_UTILTIY_PATH)/CImageStore.cpp
+
+#Add Standard Library classes here
+LOCAL_SRC_FILES += $(MY_CORE_STD_LIB_PATH)/TIntFloat.cpp
+LOCAL_SRC_FILES += $(MY_CORE_STD_LIB_PATH)/TIntFloat64.cpp
+LOCAL_SRC_FILES += $(MY_CORE_STD_LIB_PATH)/RectAndPoints.cpp
+LOCAL_SRC_FILES += $(MY_CORE_STD_LIB_PATH)/CString.cpp
+LOCAL_SRC_FILES += $(MY_CORE_STD_LIB_PATH)/CMath.cpp
+
+#Add Backend-Common classes here
+LOCAL_SRC_FILES += $(MY_CORE_BACKEND_COMMON_PATH)/CHitBox.cpp
+
+
+#debug
+LOCAL_SRC_FILES += test.cpp
+#-------------------------------- Other Stuff ------------------------------- #
+
+LOCAL_MODULE    := FighterPilotThePacificWar
+LOCAL_CFLAGS    += -Werror -g -DEBUG -lfreetype
+LOCAL_CFLAGS    += -I$(LOCAL_PATH)/../libs/freetype-2.4.10/include #USED FOR FREE FONT, COMPILATION INCLUDE PATH
+
+# for native audio
+LOCAL_LDLIBS    += -lOpenSLES
+LOCAL_LDLIBS    += -landroid
+
+# for OpenGL
+LOCAL_LDLIBS    += -lEGL
+LOCAL_LDLIBS    += -lGLESv1_CM #OpenGL 1.0
+
+# for logging
+LOCAL_LDLIBS    += -llog
+
+include $(BUILD_SHARED_LIBRARY)
